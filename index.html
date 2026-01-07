@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Restoran China - 中华餐厅菜单</title>
+    <title>Menu Restoran - Pesan via WhatsApp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,17 +13,18 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        /* MODIFIKASI TEMA WARNA DI SINI */
         :root {
-            --primary: #c62828;
-            --primary-dark: #8e0000;
-            --secondary: #f9a825;
-            --light: #f5f5f5;
-            --dark: #333;
-            --gray: #757575;
+            --primary: #ff8fab;      /* Pink Muda (Warna Utama/Header/Tombol) */
+            --primary-dark: #ff5c8a; /* Pink Lebih Gelap (Efek Hover) */
+            --secondary: #48dbfb;    /* Biru Muda (Aksen/Notifikasi) */
+            --light: #fdf2f8;        /* Latar Belakang Sangat Muda */
+            --dark: #192a56;         /* Biru Tua (Warna Teks & Footer) */
+            --gray: #7f8fa6;         /* Abu-abu kebiruan */
         }
         
         body {
-            background-color: #fefefe;
+            background-color: #ffffff;
             color: var(--dark);
             line-height: 1.6;
         }
@@ -37,7 +38,7 @@
         /* Header */
         header {
             background-color: var(--primary);
-            color: white;
+            color: white; /* Teks putih di atas pink */
             padding: 20px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -59,6 +60,7 @@
         .logo i {
             font-size: 2.5rem;
             margin-right: 10px;
+            color: white;
         }
         
         .logo h1 {
@@ -67,20 +69,21 @@
         }
         
         .logo span {
-            color: var(--secondary);
+            color: var(--dark); /* Aksen Biru Tua pada Logo */
         }
         
         .cart-icon {
             position: relative;
             font-size: 1.8rem;
             cursor: pointer;
+            color: white;
         }
         
         .cart-count {
             position: absolute;
             top: -8px;
             right: -8px;
-            background-color: var(--secondary);
+            background-color: var(--secondary); /* Biru Muda */
             color: var(--dark);
             border-radius: 50%;
             width: 24px;
@@ -105,7 +108,7 @@
         
         .page-title h2 {
             font-size: 2.5rem;
-            color: var(--primary);
+            color: var(--dark); /* Judul Biru Tua */
             margin-bottom: 10px;
         }
         
@@ -124,7 +127,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background-color: var(--secondary);
+            background-color: var(--primary); /* Garis bawah Pink */
             border-radius: 2px;
         }
         
@@ -167,6 +170,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
         }
         
         .menu-item:hover {
@@ -199,7 +203,7 @@
         }
         
         .item-price {
-            color: var(--primary);
+            color: var(--primary-dark); /* Harga Pink Tua */
             font-weight: 700;
             font-size: 1.2rem;
         }
@@ -219,13 +223,13 @@
         .quantity-controls {
             display: flex;
             align-items: center;
-            border: 1px solid #ddd;
+            border: 1px solid var(--secondary);
             border-radius: 5px;
             overflow: hidden;
         }
         
         .qty-btn {
-            background-color: #f5f5f5;
+            background-color: #f0faff; /* Latar biru sangat muda */
             border: none;
             width: 36px;
             height: 36px;
@@ -235,7 +239,7 @@
         }
         
         .qty-btn:hover {
-            background-color: #e0e0e0;
+            background-color: var(--secondary);
         }
         
         .quantity {
@@ -317,6 +321,7 @@
         .cart-item-info h4 {
             margin-bottom: 5px;
             font-size: 1.1rem;
+            color: var(--dark);
         }
         
         .cart-item-price {
@@ -348,6 +353,7 @@
         .cart-footer {
             padding: 20px;
             border-top: 2px solid #eee;
+            background-color: #f9f9f9;
         }
         
         .cart-total {
@@ -361,8 +367,8 @@
         
         .checkout-btn {
             width: 100%;
-            background-color: var(--secondary);
-            color: var(--dark);
+            background-color: #25D366; /* Warna WA */
+            color: white;
             border: none;
             padding: 15px;
             font-size: 1.1rem;
@@ -370,10 +376,14 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .checkout-btn:hover {
-            background-color: #f57f17;
+            background-color: #128C7E;
         }
         
         .empty-cart {
@@ -390,7 +400,7 @@
         
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background-color: var(--dark); /* Biru Tua */
             color: white;
             padding: 40px 0 20px;
         }
@@ -406,11 +416,11 @@
         .footer-section h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: var(--secondary);
+            color: var(--secondary); /* Judul Footer Biru Muda */
         }
         
         .footer-section p, .footer-section li {
-            color: #bbb;
+            color: #dcdde1;
             margin-bottom: 10px;
         }
         
@@ -420,7 +430,7 @@
         
         .footer-section i {
             margin-right: 10px;
-            color: var(--secondary);
+            color: var(--primary); /* Ikon Footer Pink */
         }
         
         .copyright {
@@ -455,12 +465,11 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container header-content">
             <div class="logo">
                 <i class="fas fa-utensils"></i>
-                <h1>Restoran <span>China</span></h1>
+                <h1>Restoran <span>Lezat</span></h1>
             </div>
             <div class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
@@ -469,14 +478,12 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="container">
         <div class="page-title">
             <h2>Menu Makanan & Minuman</h2>
-            <p>Pesan makanan dan minuman khas China dengan cita rasa autentik. Pilih dari menu kami yang lezat dan pesan secara online.</p>
+            <p>Pesan makanan dan minuman dengan cita rasa autentik. Pilih dari menu kami yang lezat dan pesan langsung via WhatsApp.</p>
         </div>
 
-        <!-- Categories -->
         <div class="categories">
             <button class="category-btn active" data-category="all">Semua</button>
             <button class="category-btn" data-category="makanan">Makanan</button>
@@ -484,13 +491,10 @@
             <button class="category-btn" data-category="populer">Populer</button>
         </div>
 
-        <!-- Menu Items -->
         <div class="menu-grid" id="menuContainer">
-            <!-- Menu items akan diisi oleh JavaScript -->
-        </div>
+            </div>
     </main>
 
-    <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h3>Keranjang Pesanan</h3>
@@ -500,32 +504,32 @@
         </div>
         
         <div class="cart-items" id="cartItems">
-            <!-- Cart items akan diisi oleh JavaScript -->
-        </div>
+            </div>
         
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
-                <span id="cartTotal">¥0</span>
+                <span id="cartTotal">Rp 0</span>
             </div>
-            <button class="checkout-btn" id="checkoutBtn">Pesan Sekarang</button>
+            <button class="checkout-btn" id="checkoutBtn">
+                <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+            </button>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Restoran China</h3>
-                    <p>Menyajikan makanan dan minuman khas China dengan bahan-bahan pilihan dan resep autentik.</p>
+                    <h3>Tentang Kami</h3>
+                    <p>Menyajikan makanan dan minuman berkualitas dengan bahan-bahan pilihan dan resep terbaik.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Kontak Kami</h3>
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Jl. Kuliner No. 123, Sinjai</li>
-                        <li><i class="fas fa-phone"></i> +62 21 1234 5678</li>
-                        <li><i class="fas fa-envelope"></i> info@restoranchina.com</li>
+                        <li><i class="fas fa-phone"></i> 082319527214</li>
+                        <li><i class="fas fa-envelope"></i> info@restoranlezat.com</li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -674,7 +678,7 @@
                     <div class="item-content">
                         <div class="item-title">
                             <h3 class="item-name">${item.name}</h3>
-                            <span class="item-price">¥${item.price.toLocaleString()}</span>
+                            <span class="item-price">Rp ${item.price.toLocaleString()}</span>
                         </div>
                         <p class="item-desc">${item.description}</p>
                         <div class="item-controls">
@@ -728,7 +732,9 @@
                 document.getElementById('cartSidebar').classList.remove('active');
             });
             
-            // Checkout button
+            // ----------------------------------------------------------------
+            // CHECKOUT BUTTON - WHATSAPP INTEGRATION
+            // ----------------------------------------------------------------
             document.getElementById('checkoutBtn').addEventListener('click', function() {
                 if (cart.length === 0) {
                     alert('Keranjang Anda masih kosong. Silakan tambahkan item terlebih dahulu.');
@@ -736,16 +742,31 @@
                 }
                 
                 const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                alert(`Terima kasih! Pesanan Anda sebesar ¥${total.toLocaleString()} telah diterima. Pesanan akan diproses segera.`);
                 
-                // Reset cart
+                // Format Pesan WhatsApp
+                let message = "Halo, saya ingin memesan menu berikut:\n\n";
+                cart.forEach((item, index) => {
+                    message += `${index + 1}. ${item.name} (${item.quantity}x) - Rp ${(item.price * item.quantity).toLocaleString()}\n`;
+                });
+                
+                message += `\n*Total Pesanan: Rp ${total.toLocaleString()}*`;
+                message += `\n\nMohon diproses, terima kasih.`;
+                
+                // Nomor WA Tujuan (Format Internasional 62...)
+                const phoneNumber = "6282319527214"; 
+                
+                // Buat Link WA
+                const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                
+                // Buka di tab baru
+                window.open(waUrl, '_blank');
+                
+                // Opsional: Reset cart setelah pesan (uncomment jika ingin otomatis kosong)
                 cart = [];
                 localStorage.setItem('chinaRestaurantCart', JSON.stringify(cart));
                 updateCartCount();
                 renderCartItems();
                 renderMenuItems();
-                
-                // Close cart sidebar
                 document.getElementById('cartSidebar').classList.remove('active');
             });
             
@@ -855,7 +876,7 @@
                         <p>Tambahkan makanan atau minuman ke keranjang Anda</p>
                     </div>
                 `;
-                cartTotalElement.textContent = '¥0';
+                cartTotalElement.textContent = 'Rp 0';
                 return;
             }
             
@@ -871,7 +892,7 @@
                     <div class="cart-item">
                         <div class="cart-item-info">
                             <h4>${item.name}</h4>
-                            <p class="cart-item-price">¥${item.price.toLocaleString()}</p>
+                            <p class="cart-item-price">Rp ${item.price.toLocaleString()}</p>
                         </div>
                         <div class="cart-item-controls">
                             <button class="qty-btn cart-minus" data-id="${item.id}">-</button>
@@ -886,7 +907,7 @@
             });
             
             cartItemsContainer.innerHTML = cartHTML;
-            cartTotalElement.textContent = `¥${total.toLocaleString()}`;
+            cartTotalElement.textContent = `Rp ${total.toLocaleString()}`;
         }
     </script>
 </body>
