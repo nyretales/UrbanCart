@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Restoran China - 中华餐厅菜单</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #c62828;
+            --primary-dark: #8e0000;
+            --secondary: #f9a825;
+            --light: #f5f5f5;
+            --dark: #333;
+            --gray: #757575;
+        }
+        
+        body {
+            background-color: #fefefe;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .page-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        /* Menu Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            gap: 15px;
+        }
+        
+        .category-btn {
+            padding: 12px 24px;
+            background-color: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .item-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .item-content {
+            padding: 20px;
+        }
+        
+        .item-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .item-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .item-desc {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .item-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .qty-btn {
+            background-color: #f5f5f5;
+            border: none;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .qty-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .quantity {
+            padding: 0 15px;
+            font-weight: 600;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-sidebar.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .cart-items {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-info h4 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-item-qty {
+            margin: 0 10px;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .cart-footer {
+            padding: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #f57f17;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-section p, .footer-section li {
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>Restoran <span>China</span></h1>
+            </div>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <div class="cart-count">0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-title">
+            <h2>Menu Makanan & Minuman</h2>
+            <p>Pesan makanan dan minuman khas China dengan cita rasa autentik. Pilih dari menu kami yang lezat dan pesan secara online.</p>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <button class="category-btn active" data-category="all">Semua</button>
+            <button class="category-btn" data-category="makanan">Makanan</button>
+            <button class="category-btn" data-category="minuman">Minuman</button>
+            <button class="category-btn" data-category="populer">Populer</button>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="menu-grid" id="menuContainer">
+            <!-- Menu items akan diisi oleh JavaScript -->
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Keranjang Pesanan</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items akan diisi oleh JavaScript -->
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">¥0</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Pesan Sekarang</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Restoran China</h3>
+                    <p>Menyajikan makanan dan minuman khas China dengan bahan-bahan pilihan dan resep autentik.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Kuliner No. 123, Sinjai</li>
+                        <li><i class="fas fa-phone"></i> +62 21 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@restoranchina.com</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Jam Buka</h3>
+                    <ul>
+                        <li>Senin - Jumat: 10:00 - 22:00</li>
+                        <li>Sabtu - Minggu: 09:00 - 23:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 design by HDR.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data menu makanan dan minuman China
+        const menuItems = [
+            {
+                id: 1,
+                name: "Pangsit Kuah (Wonton Soup)",
+                category: ["makanan", "populer"],
+                price: 45000,
+                description: "Pangsit daging ayam dengan kuah kaldu ayam yang gurih.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 2,
+                name: "Mie Goreng Shanghai",
+                category: ["makanan", "populer"],
+                price: 55000,
+                description: "Mie tebal digoreng dengan udang, daging ayam, dan sayuran.",
+                image: "https://images.unsplash.com/photo-1555126634-323283e090fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 3,
+                name: "Peking Duck",
+                category: ["makanan"],
+                price: 175000,
+                description: "Daging bebek panggang khas Beijing dengan kulit renyah.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 4,
+                name: "Kung Pao Chicken",
+                category: ["makanan", "populer"],
+                price: 65000,
+                description: "Ayam tumis pedas dengan kacang dan cabai kering.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 5,
+                name: "Dim Sum Basket",
+                category: ["makanan"],
+                price: 75000,
+                description: "Berbagai dim sum: hakaw, siomay, dan dumpling ayam.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 6,
+                name: "Mapo Tofu",
+                category: ["makanan"],
+                price: 50000,
+                description: "Tahu lembut dengan saus pedas dan daging cincang.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 7,
+                name: "Bubble Tea (Boba)",
+                category: ["minuman", "populer"],
+                price: 35000,
+                description: "Tea susu dengan bola tapioka, pilihan rasa original, matcha, taro.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 8,
+                name: "Teh Hijau (Green Tea)",
+                category: ["minuman"],
+                price: 20000,
+                description: "Teh hijau asli China diseduh tradisional.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 9,
+                name: "Es Lemon Tea",
+                category: ["minuman"],
+                price: 25000,
+                description: "Teh hitam dengan perasan lemon segar dan es.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 10,
+                name: "Sichuan Hot Pot",
+                category: ["makanan", "populer"],
+                price: 125000,
+                description: "Rebusan pedas khas Sichuan dengan berbagai daging dan sayuran.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 11,
+                name: "Xiaolongbao",
+                category: ["makanan", "populer"],
+                price: 60000,
+                description: "Pangsit berisi kaldu dan daging babi, khas Shanghai.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 12,
+                name: "Es Jasmine Tea",
+                category: ["minuman"],
+                price: 22000,
+                description: "Teh melati asli dengan es, menyegarkan.",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            }
+        ]
+          // State aplikasi
+        let cart = JSON.parse(localStorage.getItem('chinaRestaurantCart')) || [];
+        let currentCategory = 'all';
+
+        // Inisialisasi halaman
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMenuItems();
+            updateCartCount();
+            setupEventListeners();
+        });
+
+        // Render menu items ke halaman
+        function renderMenuItems() {
+            const menuContainer = document.getElementById('menuContainer');
+            menuContainer.innerHTML = '';
+            
+            // Filter menu berdasarkan kategori
+            const filteredItems = currentCategory === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category.includes(currentCategory));
+            
+            // Render setiap item menu
+            filteredItems.forEach(item => {
+                const menuItemElement = document.createElement('div');
+                menuItemElement.className = 'menu-item';
+                menuItemElement.setAttribute('data-id', item.id);
+                
+                menuItemElement.innerHTML = `
+                    <div class="item-image" style="background-image: url('${item.image}')"></div>
+                    <div class="item-content">
+                        <div class="item-title">
+                            <h3 class="item-name">${item.name}</h3>
+                            <span class="item-price">¥${item.price.toLocaleString()}</span>
+                        </div>
+                        <p class="item-desc">${item.description}</p>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn minus" data-id="${item.id}">-</button>
+                                <span class="quantity" id="qty-${item.id}">0</span>
+                                <button class="qty-btn plus" data-id="${item.id}">+</button>
+                            </div>
+                            <button class="add-to-cart" data-id="${item.id}">Tambah</button>
+                        </div>
+                    </div>
+                `;
+                
+                menuContainer.appendChild(menuItemElement);
+            });
+            
+            // Update quantity display untuk item yang sudah ada di cart
+            cart.forEach(item => {
+                const qtyElement = document.getElementById(`qty-${item.id}`);
+                if (qtyElement) {
+                    qtyElement.textContent = item.quantity;
+                }
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category buttons
+            document.querySelectorAll('.category-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update category dan render ulang menu
+                    currentCategory = this.getAttribute('data-category');
+                    renderMenuItems();
+                });
+            });
+            
+            // Cart icon
+            document.getElementById('cartIcon').addEventListener('click', function() {
+                document.getElementById('cartSidebar').classList.add('active');
+                renderCartItems();
+            });
+            
+            // Close cart
+            document.getElementById('closeCart').addEventListener('click', function() {
+                document.getElementById('cartSidebar').classList.remove('active');
+            });
+            
+            // Checkout button
+            document.getElementById('checkoutBtn').addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Keranjang Anda masih kosong. Silakan tambahkan item terlebih dahulu.');
+                    return;
+                }
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                alert(`Terima kasih! Pesanan Anda sebesar ¥${total.toLocaleString()} telah diterima. Pesanan akan diproses segera.`);
+                
+                // Reset cart
+                cart = [];
+                localStorage.setItem('chinaRestaurantCart', JSON.stringify(cart));
+                updateCartCount();
+                renderCartItems();
+                renderMenuItems();
+                
+                // Close cart sidebar
+                document.getElementById('cartSidebar').classList.remove('active');
+            });
+            
+            // Delegasi event untuk button plus/minus dan tambah ke keranjang
+            document.getElementById('menuContainer').addEventListener('click', function(e) {
+                const target = e.target;
+                const id = parseInt(target.getAttribute('data-id'));
+                
+                if (target.classList.contains('plus')) {
+                    updateQuantity(id, 1);
+                } else if (target.classList.contains('minus')) {
+                    updateQuantity(id, -1);
+                } else if (target.classList.contains('add-to-cart')) {
+                    updateQuantity(id, 1);
+                }
+            });
+            
+            // Delegasi event untuk cart items
+            document.getElementById('cartItems').addEventListener('click', function(e) {
+                const target = e.target;
+                const id = parseInt(target.getAttribute('data-id'));
+                
+                if (target.classList.contains('cart-item-remove')) {
+                    removeFromCart(id);
+                } else if (target.classList.contains('cart-plus')) {
+                    updateQuantity(id, 1);
+                } else if (target.classList.contains('cart-minus')) {
+                    updateQuantity(id, -1);
+                }
+            });
+        }
+
+        // Update quantity item di cart
+        function updateQuantity(id, change) {
+            const item = menuItems.find(item => item.id === id);
+            if (!item) return;
+            
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === id);
+            
+            if (existingItemIndex > -1) {
+                // Item sudah ada di cart
+                cart[existingItemIndex].quantity += change;
+                
+                // Jika quantity menjadi 0, hapus dari cart
+                if (cart[existingItemIndex].quantity <= 0) {
+                    cart.splice(existingItemIndex, 1);
+                }
+            } else if (change > 0) {
+                // Tambah item baru ke cart
+                cart.push({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: 1
+                });
+            }
+            
+            // Simpan ke localStorage
+            localStorage.setItem('chinaRestaurantCart', JSON.stringify(cart));
+            
+            // Update UI
+            updateCartCount();
+            renderCartItems();
+            
+            // Update quantity di menu
+            const qtyElement = document.getElementById(`qty-${id}`);
+            if (qtyElement) {
+                const cartItem = cart.find(item => item.id === id);
+                qtyElement.textContent = cartItem ? cartItem.quantity : 0;
+            }
+        }
+
+        // Hapus item dari cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            
+            // Simpan ke localStorage
+            localStorage.setItem('chinaRestaurantCart', JSON.stringify(cart));
+            
+            // Update UI
+            updateCartCount();
+            renderCartItems();
+            
+            // Update quantity di menu
+            const qtyElement = document.getElementById(`qty-${id}`);
+            if (qtyElement) {
+                qtyElement.textContent = 0;
+            }
+        }
+
+        // Update cart count di header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = totalItems;
+        }
+
+        // Render cart items di sidebar
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Keranjang Kosong</h3>
+                        <p>Tambahkan makanan atau minuman ke keranjang Anda</p>
+                    </div>
+                `;
+                cartTotalElement.textContent = '¥0';
+                return;
+            }
+            
+            // Render setiap item di cart
+            let cartHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                cartHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p class="cart-item-price">¥${item.price.toLocaleString()}</p>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="qty-btn cart-minus" data-id="${item.id}">-</button>
+                            <span class="cart-item-qty">${item.quantity}</span>
+                            <button class="qty-btn cart-plus" data-id="${item.id}">+</button>
+                            <button class="cart-item-remove" data-id="${item.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = cartHTML;
+            cartTotalElement.textContent = `¥${total.toLocaleString()}`;
+        }
+    </script>
+</body>
+</html>
